@@ -1,0 +1,71 @@
+.main-header {
+    padding: .5rem;
+
+    .container {
+        .navbar-brand {
+            img {
+                max-width: 45px;
+                max-height: 45px;
+            }
+
+            @include mobile {
+                margin-right: 10px;
+            }
+        }
+
+        .navbar-toggler {
+            padding: 0;
+            border: none;
+        }
+
+        form {
+            .input-group {
+                .form-control-navbar {
+                    background-color: #f2f4f6;
+                    border: none;
+
+                    &:focus {
+                        background-color: #e9ecef;
+                        color: #343a40;
+                        box-shadow: none;
+
+                        & + .input-group-append {
+                            .btn-navbar {
+                                background-color: #e9ecef;
+                                color: #343a40;
+                                box-shadow: none;
+                            }
+                        }
+                    }
+                }
+
+                .input-group-append {
+                    .btn-navbar {
+                        background: #f2f4f6;
+                        border: none;
+                        color: #343a40;
+                        transition: color 0s;
+
+                        &:focus {
+                            box-shadow: none;
+                        }
+                    }
+                }
+            }
+
+            @include mobile {
+                margin-right: 10px;
+            }
+        }
+
+        .logout {
+            color: rgba(0, 0, 0, 0.5);
+            display: block;
+            padding: 0.5rem 1rem;
+
+            &:hover {
+                color: rgba(0, 0, 0, 0.7);
+            }
+        }
+    }
+}

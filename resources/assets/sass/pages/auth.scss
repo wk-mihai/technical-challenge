@@ -1,0 +1,40 @@
+.auth-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    .auth-wrap {
+        width: 360px;
+
+        .auth-logo {
+            font-size: 2.1rem;
+            font-weight: 300;
+            margin-bottom: .9rem;
+            text-align: center;
+
+            a {
+                color: #495057;
+            }
+        }
+
+        .card {
+            .card-body {
+                .title {
+                    font-size: 20px;
+                }
+
+                form {
+                    .input-group {
+                        .form-control {
+                            &.is-invalid {
+                                background-image: none;
+                                padding-right: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

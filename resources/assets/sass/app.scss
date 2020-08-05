@@ -1,0 +1,18 @@
+@import "variables";
+@import "mixins";
+
+// Bootstrap
+@import "~bootstrap/scss/bootstrap";
+
+// Fontawesome
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+
+@import "styles";
+
+@import "partials/nav";
+@import "partials/header";
+
+@import "pages/auth";
