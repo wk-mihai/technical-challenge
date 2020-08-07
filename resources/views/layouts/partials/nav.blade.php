@@ -42,7 +42,8 @@
                                href="{{ route('admin.trainings.index') }}">Create / Update trainings</a>
                             <a class="dropdown-item {{ url()->current() === route('admin.types.index') ? 'active' : '' }}"
                                href="{{ route('admin.types.index') }}">Trainings types</a>
-                            <a class="dropdown-item" href="#">Users</a>
+                            <a class="dropdown-item {{ url()->current() === route('admin.users.index') ? 'active' : '' }}"
+                               href="{{ route('admin.users.index') }}">Users</a>
                         </div>
                     </li>
                 @endif

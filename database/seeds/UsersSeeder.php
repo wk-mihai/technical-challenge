@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -12,23 +13,17 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-        $users = [
-            [
-                'name'     => 'Admin',
-                'email'    => 'admin@challenge.local',
-                'password' => bcrypt('admin')
-            ],
-            [
-                'name'     => 'Pilot',
-                'email'    => 'pilot@challenge.local',
-                'password' => bcrypt('pilot')
-            ],
-            [
-                'name'     => 'User',
-                'email'    => 'user@challenge.local',
-                'password' => bcrypt('user')
-            ],
-        ];
+        $roles = Role::get();
+        $users = [];
+
+        foreach ($roles as $role) {
+            $users[] = [
+                'role_id'  => $role->id,
+                'name'     => $role->name,
+                'email'    => "{$role->slug}@challenge.local",
+                'password' => bcrypt($role->slug)
+            ];
+        }
 
         array_map(function ($user) {
             return User::firstOrCreate($user);

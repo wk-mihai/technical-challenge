@@ -23,4 +23,6 @@ return [
     'confirm_delete_record'          => "Are you sure you would like to delete this record",
     'record_has_deleted'             => "The record has been deleted.",
     'record_has_relations'           => "The record has related records. Please delete them first.",
+    'cant_delete_own_user'           => "You cannot delete your own user.",
+    'leave_empty_password'           => "Leave empty if you don't want to update the password.",
 ];

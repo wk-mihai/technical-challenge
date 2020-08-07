@@ -21,8 +21,6 @@ class Authenticate extends Middleware
     {
         $this->authenticate($request, $guards);
 
-        $this->auth->user()->load('roles');
-
         return $next($request);
     }
 

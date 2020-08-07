@@ -7,7 +7,8 @@ if (!function_exists('isAdmin')) {
      */
     function isAdmin(): bool
     {
-        return auth()->user()->getRole()->isAdmin();
+        $userRole = auth()->user()->role;
+        return isset($userRole) && $userRole->isAdmin();
     }
 }
 
@@ -18,12 +19,12 @@ if (!function_exists('canViewTrainings')) {
      */
     function canViewTrainings(): bool
     {
-        $userRole = auth()->user()->getRole();
-        return $userRole->isAdmin() || $userRole->can_view_trainings;
+        $userRole = auth()->user()->role;
+        return isset($userRole) && ($userRole->isAdmin() || $userRole->can_view_trainings);
     }
 }
 
-if(!function_exists('linkToRoute')) {
+if (!function_exists('linkToRoute')) {
     /**
      * @param string $name
      * @param string|null $title

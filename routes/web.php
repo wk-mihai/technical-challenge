@@ -44,5 +44,15 @@ Route::middleware('auth')->group(function () {
             Route::patch('{type}', 'Admin\TypesController@update')->name('admin.types.update');
             Route::delete('{type}', 'Admin\TypesController@destroy')->name('admin.types.destroy');
         });
+
+        Route::prefix('users')->group(function () {
+            Route::get('/', 'Admin\UsersController@index')->name('admin.users.index');
+            Route::get('create', 'Admin\UsersController@create')->name('admin.users.create');
+            Route::get('{user}/edit', 'Admin\UsersController@edit')->name('admin.users.edit');
+            Route::get('{user}', 'Admin\UsersController@show')->name('admin.users.show');
+            Route::post('/', 'Admin\UsersController@store')->name('admin.users.store');
+            Route::patch('{user}', 'Admin\UsersController@update')->name('admin.users.update');
+            Route::delete('{user}', 'Admin\UsersController@destroy')->name('admin.users.destroy');
+        });
     });
 });

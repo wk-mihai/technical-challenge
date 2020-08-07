@@ -29,9 +29,7 @@ class AuthorizeAdminUsers
      */
     public function handle($request, Closure $next)
     {
-        $userRole = $this->auth->user()->getRole();
-
-        if ($userRole->isAdmin()) {
+        if (isAdmin()) {
             return $next($request);
         }
 

@@ -29,9 +29,7 @@ class AuthorizeWithPermission
      */
     public function handle($request, Closure $next)
     {
-        $userRole = $this->auth->user()->getRole();
-
-        if ($userRole->isAdmin() || $userRole->can_view_trainings) {
+        if (canViewTrainings()) {
             return $next($request);
         }
 

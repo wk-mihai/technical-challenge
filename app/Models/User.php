@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -11,26 +10,22 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password',
+        'role_id',
+        'name',
+        'email',
+        'password',
     ];
 
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
-     * @return BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function roles()
+    public function role()
     {
-        return $this->belongsToMany(Role::class, 'role_users', 'user_id', 'role_id');
-    }
-
-    /**
-     * @return mixed|null
-     */
-    public function getRole()
-    {
-        return $this->roles->first();
+        return $this->belongsTo(Role::class);
     }
 }
