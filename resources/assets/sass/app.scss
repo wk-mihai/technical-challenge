@@ -10,9 +10,17 @@
 @import '~@fortawesome/fontawesome-free/scss/regular';
 @import '~@fortawesome/fontawesome-free/scss/brands';
 
+// Tinymce
+@import "~tinymce/skins/ui/oxide/skin.min.css";
+@import "~tinymce/skins/ui/oxide/content.min.css";
+@import "~tinymce/skins/content/default/content.min.css";
+
+// Fancybox
+@import "~@fancyapps/fancybox/dist/jquery.fancybox.min.css";
+
 @import "styles";
 
 @import "partials/nav";
-@import "partials/header";
+@import "partials/card";
 
 @import "pages/auth";

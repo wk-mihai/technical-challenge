@@ -22,3 +22,23 @@ if (!function_exists('canViewTrainings')) {
         return $userRole->isAdmin() || $userRole->can_view_trainings;
     }
 }
+
+if(!function_exists('linkToRoute')) {
+    /**
+     * @param string $name
+     * @param string|null $title
+     * @param array $parameters
+     * @param array $attributes
+     * @return string
+     */
+    function linkToRoute(string $name, ?string $title = null, array $parameters = [], array $attributes = []): string
+    {
+        $attributesStr = '';
+
+        foreach ($attributes as $key => $attribute) {
+            $attributesStr .= " {$key}={$attribute}";
+        }
+
+        return sprintf("<a href='%s' %s>{$title}</a>", route($name, $parameters), $attributesStr);
+    }
+}

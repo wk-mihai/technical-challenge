@@ -1,16 +1,14 @@
-html {
-    body {
-        background: #e9ecef;
+body {
+    background: #e9ecef;
 
-        .wrapper {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+    .wrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-height: calc(100vh - 63px);
 
-            .container {
-                margin-top: 20px;
-            }
+        .container {
+            margin: 20px auto;
         }
     }
 }

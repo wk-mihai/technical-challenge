@@ -27,7 +27,11 @@
 @endauth
 
 <main class="wrapper">
-    <div class="container">
+    <div class="container {{ !auth()->check() ? 'auth-page' : '' }}">
+        @auth
+            @include('layouts.partials.messages')
+        @endauth
+
         @yield('content')
     </div>
 </main>

@@ -38,7 +38,8 @@
                             Settings
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownSettings">
-                            <a class="dropdown-item" href="#">Create / Update trainings</a>
+                            <a class="dropdown-item {{ url()->current() === route('admin.trainings.index') ? 'active' : '' }}"
+                               href="{{ route('admin.trainings.index') }}">Create / Update trainings</a>
                             <a class="dropdown-item" href="#">Trainings types</a>
                             <a class="dropdown-item" href="#">Users</a>
                         </div>

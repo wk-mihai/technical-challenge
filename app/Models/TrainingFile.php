@@ -12,4 +12,15 @@ class TrainingFile extends Model
         'type',
         'url'
     ];
+
+    /**
+     * @return string
+     */
+    public function getFullFileUrlAttribute(): string
+    {
+        return route('training.files', [
+            'id'     => $this->training_id,
+            'fileId' => $this->id
+        ]);
+    }
 }

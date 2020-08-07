@@ -8,6 +8,8 @@ mix.options({processCssUrls: false})
         'jquery',
         'popper.js',
         'bootstrap',
+        'tinymce',
+        '@fancyapps/fancybox'
     ])
     .sass('resources/assets/sass/app.scss', 'public/css')
     .copy('resources/assets/images', 'public/img');

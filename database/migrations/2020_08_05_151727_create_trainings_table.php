@@ -19,7 +19,7 @@ class CreateTrainingsTable extends Migration
                 ->constrained('types')
                 ->onDelete('cascade');
             $table->string('name')->index();
-            $table->text('content');
+            $table->text('content')->nullable();
             $table->timestamps();
         });
     }
