@@ -22,4 +22,5 @@ return [
     'delete_record'                  => "Delete record",
     'confirm_delete_record'          => "Are you sure you would like to delete this record",
     'record_has_deleted'             => "The record has been deleted.",
+    'record_has_relations'           => "The record has related records. Please delete them first.",
 ];

@@ -13,7 +13,7 @@ require('@fancyapps/fancybox');
 
 window.TrainingFiles = require('./scripts/TrainingFiles')
 
-$( document ).ready(function() {
+$(document).ready(function () {
     tinymce.init({
         selector: ".tiny",
         skin: false,
@@ -25,4 +25,22 @@ $( document ).ready(function() {
         toolbar: 'insert | undo redo |  formatselect | bold italic backcolor forecolor  | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
         content_css: []
     });
+
+    $('input[name=name]').on('keyup', function () {
+        let slugFiled = $(this).closest('form').find('input[name=slug]'),
+            isUpdateForm = $(this).closest('form').find('input[type=hidden][name=_method]').val();
+
+        if (!slugFiled.length || isUpdateForm === 'PATCH') {
+            return;
+        }
+
+        slugFiled.val(convertToSlug($(this).val()))
+    });
 });
+
+function convertToSlug(text) {
+    return text
+        .toLowerCase()
+        .replace(/[^\w ]+/g, '')
+        .replace(/ +/g, '-');
+}

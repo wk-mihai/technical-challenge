@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-6">
-        <div class="form-group {{ $errors->first('name') ? 'is-invalid' : '' }}">
+        <div class="form-group">
             <label for="name">{{ __('Name') }}<span class="required">*</span></label>
             {!! Form::text('name', null, ['id' => 'name', 'class' => 'form-control' . ($errors->first('name') ? ' is-invalid' : '')] ) !!}
             @error('name')
