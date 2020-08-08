@@ -18,9 +18,11 @@ class CreateTrainingsTable extends Migration
             $table->foreignId('type_id')
                 ->constrained('types')
                 ->onDelete('cascade');
-            $table->string('name')->index();
+            $table->string('name');
             $table->text('content')->nullable();
             $table->timestamps();
+
+            $table->index(['name']);
         });
     }
 
