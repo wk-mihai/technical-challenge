@@ -3,10 +3,6 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes([
     'register' => false,
     'verify'   => false
@@ -19,7 +15,11 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('can.view.trainings')->group(function () {
         Route::prefix('trainings')->group(function () {
-            Route::get('/', 'TrainingsController@index')->name('trainings');
+            Route::get('/{type?}', 'TrainingsController@index')
+                ->name('trainings.index')
+                ->where('type', '[A-Za-z]+');
+            Route::get('{training}', 'TrainingsController@show')->name('trainings.show');
+
             Route::get('{id}/file/{fileId}', 'FilesController@getFile')->name('training.files');
         });
     });

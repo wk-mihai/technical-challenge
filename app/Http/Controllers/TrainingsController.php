@@ -3,83 +3,50 @@
 namespace App\Http\Controllers;
 
 use App\Models\Training;
+use App\Repositories\TrainingsRepository;
+use App\Repositories\TypesRepository;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class TrainingsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param TrainingsRepository $trainingsRepository
+     * @param TypesRepository $typesRepository
+     * @param string|null $type
+     * @return View
      */
-    public function index()
+    public function index(
+        Request $request,
+        TrainingsRepository $trainingsRepository,
+        TypesRepository $typesRepository,
+        ?string $type = null
+    )
     {
-        //
-    }
+        $pageTitle = __('Trainings');
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+        $types = $typesRepository->allWhereHasTrainings($request, [], ['name', 'asc']);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        $trainings = $trainingsRepository->filter($request, $type, 16);
+
+        return view('pages.trainings.index', compact('pageTitle', 'types', 'trainings'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Training  $training
-     * @return \Illuminate\Http\Response
+     * @param Training $training
+     * @return View
      */
     public function show(Training $training)
     {
-        //
-    }
+        $pageTitle = $training->name;
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Training  $training
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Training $training)
-    {
-        //
-    }
+        $training->load(['files' => fn($query) => $query->orderBy('type', 'desc')]);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Training  $training
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Training $training)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Training  $training
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Training $training)
-    {
-        //
+        return view('pages.trainings.show', compact('pageTitle', 'training'));
     }
 }

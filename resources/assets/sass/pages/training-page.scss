@@ -1,0 +1,26 @@
+
+.training-page {
+    .page-title {
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+    }
+
+    .file-wrap {
+        .name {
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .file {
+            display: flex;
+            justify-content: center;
+
+            img {
+                max-width: 100%;
+                max-height: 500px;
+                width: auto;
+                margin: auto;
+            }
+        }
+    }
+}

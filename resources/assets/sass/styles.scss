@@ -1,5 +1,14 @@
 body {
-    background: #e9ecef;
+    &.admin {
+        background: #e9ecef;
+
+        .wrapper {
+            .container {
+                background: #e9ecef;
+                border-radius: unset;
+            }
+        }
+    }
 
     .wrapper {
         position: relative;
@@ -9,6 +18,8 @@ body {
 
         .container {
             margin: 20px auto;
+            background: #f8f9fa;
+            border-radius: 3px;
         }
     }
 }

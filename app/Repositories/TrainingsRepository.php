@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Training as Model;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\ValidationException;
 
@@ -18,6 +19,31 @@ class TrainingsRepository extends BaseRepository
     {
         $this->model = $model;
         $this->filesystem = $filesystem;
+    }
+
+    /**
+     * @param Request $request
+     * @param string|null $type
+     * @param int $records
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function filter(Request $request, ?string $type, int $records = 12)
+    {
+        return $this->model
+            ->search($request->input('search'))
+            ->whereHas(
+                'type',
+                fn(Builder $query) => $query->when(
+                    $type !== null, fn(Builder $query) => $query->where('slug', $type)
+                )
+            )
+            ->with('type')
+            ->withCount([
+                'files as images_count' => fn($query) => $query->where('type', 'image'),
+                'files as videos_count' => fn($query) => $query->where('type', 'video')
+            ])
+            ->orderBy('name', 'asc')
+            ->paginate($records);
     }
 
     /**
@@ -51,6 +77,17 @@ class TrainingsRepository extends BaseRepository
     {
         return $training->files()
             ->where('type', 'image')
+            ->get();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function trainingsWithFiles()
+    {
+        return $this->model
+            ->select('id')
+            ->withCount('files')
             ->get();
     }
 

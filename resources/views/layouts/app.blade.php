@@ -20,7 +20,7 @@
 
     @stack('styles')
 </head>
-<body>
+<body class="{{ request()->segment(1) === 'admin' ? 'admin' : '' }}">
 
 @auth
     @include('layouts.partials.nav')
