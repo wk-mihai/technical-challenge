@@ -31,9 +31,3 @@
     @include('admin.users.includes._delete_modal')
 
 @endsection
-
-@push('scripts')
-    <script>
-        new TrainingFiles()
-    </script>
-@endpush
