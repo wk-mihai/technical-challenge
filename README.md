@@ -23,7 +23,6 @@ Now, run the following command for creating the tables and populating them with 
 `php artisan migrate --seed`
 
 ## Usage
-
 For authenticate in the application, use the following credentials:
  
 ##### Admin
@@ -43,7 +42,7 @@ For generating dynamically trainings, use the following command, where _n_ is nu
 
 `php artisan generate:trainings n`
 
-##Testing
+## Testing
 Copy the .env.example file and rename it into .env.testing,
 where you have to add the database credentials, with new database name, ex. _technical_challenge_testing_.
 
