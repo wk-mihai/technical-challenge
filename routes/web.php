@@ -15,10 +15,8 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('can.view.trainings')->group(function () {
         Route::prefix('trainings')->group(function () {
-            Route::get('/{type?}', 'TrainingsController@index')
-                ->name('trainings.index')
-                ->where('type', '[A-Za-z]+');
-            Route::get('{training}', 'TrainingsController@show')->name('trainings.show');
+            Route::get('/{type?}', 'TrainingsController@index')->name('trainings.index');
+            Route::get('training-page/{training}', 'TrainingsController@show')->name('trainings.show');
 
             Route::get('{id}/file/{fileId}', 'FilesController@getFile')->name('training.files');
         });
