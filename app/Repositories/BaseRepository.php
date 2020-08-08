@@ -111,4 +111,12 @@ abstract class BaseRepository
             throw new ValidationException($record->getErrors());
         }
     }
+
+    /**
+     * @return mixed
+     */
+    public function count()
+    {
+        return $this->model->count();
+    }
 }

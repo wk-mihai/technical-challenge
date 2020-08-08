@@ -30,9 +30,10 @@ class TrainingsController extends Controller
 
         $types = $typesRepository->allWhereHasTrainings($request, [], ['name', 'asc']);
 
+        $allTrainingsCount = $trainingsRepository->count();
         $trainings = $trainingsRepository->filter($request, $type, 16);
 
-        return view('pages.trainings.index', compact('pageTitle', 'types', 'trainings'));
+        return view('pages.trainings.index', compact('pageTitle', 'types', 'trainings', 'allTrainingsCount'));
     }
 
     /**
