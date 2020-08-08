@@ -54,5 +54,15 @@ Route::middleware('auth')->group(function () {
             Route::patch('{user}', 'Admin\UsersController@update')->name('admin.users.update');
             Route::delete('{user}', 'Admin\UsersController@destroy')->name('admin.users.destroy');
         });
+
+        Route::prefix('roles')->group(function () {
+            Route::get('/', 'Admin\RolesController@index')->name('admin.roles.index');
+            Route::get('create', 'Admin\RolesController@create')->name('admin.roles.create');
+            Route::get('{role}/edit', 'Admin\RolesController@edit')->name('admin.roles.edit');
+            Route::get('{role}', 'Admin\RolesController@show')->name('admin.roles.show');
+            Route::post('/', 'Admin\RolesController@store')->name('admin.roles.store');
+            Route::patch('{role}', 'Admin\RolesController@update')->name('admin.roles.update');
+            Route::delete('{role}', 'Admin\RolesController@destroy')->name('admin.roles.destroy');
+        });
     });
 });

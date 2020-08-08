@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <h4 class="card-title">{{ $pageTitle }}</h4>
                     <div class="actions">
-                        <a class="btn btn-sm btn-primary" href="{{ route('admin.types.edit', $record->id) }}">
+                        <a class="btn btn-sm btn-primary" href="{{ route('admin.roles.edit', $record->id) }}">
                             <i class="fas fa-pen"></i>
                             {{ __('Edit') }}
                         </a>
@@ -28,11 +28,15 @@
                                     <label class="col-form-label">{{ __('Slug') }}:</label>
                                     <p class="form-control-plaintext">{{ $record->slug }}</p>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-form-label">{{ __('View trainings') }}:</label>
+                                    <p class="form-control-plaintext"> {{ __($record->isAdmin() || $record->can_view_trainings ? 'True' : 'False') }}</p>
+                                </div>
                             </div>
                         </div>
                         <div class="form-actions float-right">
                             <a class="btn btn-secondary"
-                               href="{{ route('admin.types.index') }}">{{ __('app.back') }}</a>
+                               href="{{ route('admin.roles.index') }}">{{ __('app.back') }}</a>
                         </div>
                     </form>
                 </div>
@@ -40,5 +44,5 @@
         </div>
     </div>
 
-    @include('admin.types.includes._delete_modal')
+    @include('admin.roles.includes._delete_modal')
 @endsection

@@ -25,4 +25,5 @@ return [
     'record_has_relations'           => "The record has related records. Please delete them first.",
     'cant_delete_own_user'           => "You cannot delete your own user.",
     'leave_empty_password'           => "Leave empty if you don't want to update the password.",
+    'cant_delete_admin_role'         => "You cannot delete the admin role.",
 ];

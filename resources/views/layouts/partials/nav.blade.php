@@ -6,7 +6,7 @@
         <form class="form-inline mr-3 order-md-1">
             @csrf
             <div class="input-group input-group-sm">
-                <input class="form-control form-control-navbar" type="search" placeholder="Search"
+                <input class="form-control form-control-navbar" type="search" placeholder="{{ __('Search') }}"
                        aria-label="Search">
                 <div class="input-group-append">
                     <button class="btn btn-navbar" type="submit">
@@ -23,27 +23,29 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link {{ url()->current() === route('home') ? 'active' : '' }}"
-                       href="{{ route('home') }}">Home</a>
+                       href="{{ route('home') }}">{{ __('Home') }}</a>
                 </li>
                 @if(canViewTrainings())
                     <li class="nav-item">
                         <a class="nav-link {{ url()->current() === route('trainings') ? 'active' : '' }}"
-                           href="{{ route('trainings') }}">Trainings</a>
+                           href="{{ route('trainings') }}">{{ __('Trainings') }}</a>
                     </li>
                 @endif
                 @if(isAdmin())
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSettings" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
-                            Settings
+                            {{ __('Settings') }}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownSettings">
                             <a class="dropdown-item {{ url()->current() === route('admin.trainings.index') ? 'active' : '' }}"
-                               href="{{ route('admin.trainings.index') }}">Create / Update trainings</a>
+                               href="{{ route('admin.trainings.index') }}">{{ __('Create / Update trainings') }}</a>
                             <a class="dropdown-item {{ url()->current() === route('admin.types.index') ? 'active' : '' }}"
-                               href="{{ route('admin.types.index') }}">Trainings types</a>
+                               href="{{ route('admin.types.index') }}">{{ __('Trainings types') }}</a>
                             <a class="dropdown-item {{ url()->current() === route('admin.users.index') ? 'active' : '' }}"
-                               href="{{ route('admin.users.index') }}">Users</a>
+                               href="{{ route('admin.users.index') }}">{{ __('Users') }}</a>
+                            <a class="dropdown-item {{ url()->current() === route('admin.roles.index') ? 'active' : '' }}"
+                               href="{{ route('admin.roles.index') }}">{{ __('Roles') }}</a>
                         </div>
                     </li>
                 @endif

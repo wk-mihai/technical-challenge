@@ -19,4 +19,12 @@ class Role extends Model
     {
         return $this->slug === 'admin';
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }

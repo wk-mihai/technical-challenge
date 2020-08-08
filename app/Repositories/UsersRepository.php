@@ -13,6 +13,21 @@ class UsersRepository extends BaseRepository
     }
 
     /**
+     * @param $data
+     * @throws ValidationException
+     */
+    public function store($data)
+    {
+        $data['password'] = bcrypt($data['password']);
+
+        $record = new $this->model($data);
+
+        if (!$record->save()) {
+            throw new ValidationException($record->getErrors());
+        }
+    }
+
+    /**
      * @param $record
      * @param array $data
      * @throws ValidationException
