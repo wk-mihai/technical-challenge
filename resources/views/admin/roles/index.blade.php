@@ -22,7 +22,7 @@
                                     <th>#</th>
                                     <th>{{ __('Name') }}</th>
                                     <th>{{ __('Slug') }}</th>
-                                    <th class="text-center">{{ __('View trainings') }}</th>
+                                    <th>{{ __('Training types') }}</th>
                                     <th class="text-center">{{ __('Actions') }}</th>
                                 </tr>
                                 </thead>
@@ -32,13 +32,7 @@
                                         <td>{{ $record->id }}</td>
                                         <td>{{ $record->name }}</td>
                                         <td>{{ $record->slug }}</td>
-                                        <td class="text-center">
-                                            @if($record->isAdmin() || $record->can_view_trainings)
-                                                <i class="fas fa-check text-success">
-                                                    @else
-                                                        <i class="fas fa-times text-danger">
-                                            @endif
-                                        </td>
+                                        <td>{{ $record->humanizeTypeNames(true) }}</td>
                                         <td class="text-center">
                                             @include('admin.partials.table-actions', ['showRoute' => 'admin.roles.show', 'editRoute' => 'admin.roles.edit'])
                                         </td>

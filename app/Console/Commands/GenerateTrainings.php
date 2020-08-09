@@ -42,29 +42,33 @@ class GenerateTrainings extends Command
      */
     public function handle(Faker $faker)
     {
-        $limit = (int)($this->argument('count') ?? 20);
+        $limit = (int) ($this->argument('count') ?? 20);
 
         $trainings = factory(Training::class, $limit)->create();
 
-        foreach ($trainings as $training) {
+        foreach ($trainings as $key => $training) {
             for ($i = 0; $i < rand(2, 6); $i++) {
-                $uniqueName = md5($training->id) . rand(1, 99999) . time();
-                $path = "trainings/generated-automatically/images/{$uniqueName}.jpg";
+                try {
+                    $uniqueName = md5($training->id) . rand(1, 99999) . time();
+                    $path = "trainings/generated-automatically/images/{$uniqueName}.jpg";
 
-                Storage::put(
-                    $path,
-                    file_get_contents($faker->imageUrl())
-                );
+                    Storage::put($path, file_get_contents($faker->imageUrl()));
 
-                TrainingFile::create([
-                    'training_id' => $training->id,
-                    'name'        => $faker->word,
-                    'type'        => 'image',
-                    'url'         => $path
-                ]);
+                    TrainingFile::create([
+                        'training_id' => $training->id,
+                        'name'        => $faker->word,
+                        'type'        => 'image',
+                        'url'         => $path
+                    ]);
+                } catch (\Exception $exception) {
+                    $this->error($exception->getMessage());
+                    break;
+                }
             }
+
+            $this->line(($key + 1) . " from {$limit} trainings were generated");
         }
 
-        $this->info("{$limit} trainings were generated.");
+        $this->info("{$limit} trainings were successfully generated.");
     }
 }

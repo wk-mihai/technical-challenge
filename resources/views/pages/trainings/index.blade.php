@@ -16,7 +16,8 @@
                         @foreach($types as $type)
                             <li class="nav-item">
                                 <a class="nav-link {{ url()->current() === route('trainings.index', $type->slug) ? 'active' : '' }}"
-                                   href="{{ route('trainings.index', array_merge(request()->only('search'), ['type' => $type->slug])) }}">{{ $type->name }} ({{ $type->trainings_count }})</a>
+                                   href="{{ route('trainings.index', array_merge(request()->only('search'), ['type' => $type->slug])) }}">{{ $type->name }}
+                                    ({{ $type->trainings_count }})</a>
                             </li>
                         @endforeach
                     </ul>

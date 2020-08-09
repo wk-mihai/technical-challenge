@@ -25,9 +25,16 @@ class RolesRequest extends FormRequest
     {
         $id = isset($this->role) ? $this->role->id : '';
 
-        return [
-            'name' => 'required|string',
-            'slug' => "required|string|unique:roles,slug,{$id}"
+        $rules = [
+            'name'  => 'required|string',
+            'slug'  => "required|string|unique:roles,slug,{$id}",
+            'types' => 'required|array|exists:types,id'
         ];
+
+        if (isset($this->role) && $this->role->isAdmin()) {
+            unset($rules['types']);
+        }
+
+        return $rules;
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Training;
 use App\Repositories\TrainingsRepository;
 use App\Repositories\TypesRepository;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\View\View;
 
 class TrainingsController extends Controller
@@ -28,8 +28,17 @@ class TrainingsController extends Controller
     {
         $pageTitle = __('Trainings');
 
+        if ($type !== null) {
+            $currentType = $typesRepository->getTypeWithAccess($type);
+
+            if (is_null($currentType)) {
+                abort(404);
+            }
+        }
+
         $types = $typesRepository->allWhereHasTrainings($request, [], ['name', 'asc']);
 
+        /** @var LengthAwarePaginator $trainings */
         $trainings = $trainingsRepository->filter($request, $type, 16);
         $trainings->setPath(route('trainings.index', array_merge($request->only('search'), ['type' => $type])));
 
@@ -39,15 +48,22 @@ class TrainingsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Training $training
+     * @param int $trainingId
+     * @param TrainingsRepository $trainingsRepository
      * @return View
      */
-    public function show(Training $training)
+    public function show(int $trainingId, TrainingsRepository $trainingsRepository)
     {
-        $pageTitle = $training->name;
+        $training = $trainingsRepository->getTrainingByIdWhereHasType(
+            $trainingId,
+            ['files' => fn($query) => $query->orderBy('type', 'desc')]
+        );
 
-        $training->load(['files' => fn($query) => $query->orderBy('type', 'desc')]);
+        $data = [
+            'pageTitle' => $training->name,
+            'training'  => $training
+        ];
 
-        return view('pages.trainings.show', compact('pageTitle', 'training'));
+        return view('pages.trainings.show', $data);
     }
 }

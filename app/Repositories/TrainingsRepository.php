@@ -4,7 +4,9 @@ namespace App\Repositories;
 
 use App\Models\Training as Model;
 use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\ValidationException;
@@ -25,7 +27,7 @@ class TrainingsRepository extends BaseRepository
      * @param Request $request
      * @param string|null $type
      * @param int $records
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return LengthAwarePaginator
      */
     public function filter(Request $request, ?string $type, int $records = 12)
     {
@@ -35,7 +37,7 @@ class TrainingsRepository extends BaseRepository
                 'type',
                 fn(Builder $query) => $query->when(
                     $type !== null, fn(Builder $query) => $query->where('slug', $type)
-                )
+                )->hasAccess()
             )
             ->with('type')
             ->withCount([
@@ -48,14 +50,27 @@ class TrainingsRepository extends BaseRepository
 
     /**
      * @param int $trainingId
+     * @param array $with
+     * @return mixed
+     */
+    public function getTrainingByIdWhereHasType(int $trainingId, array $with = [])
+    {
+        return $this->model
+            ->whereHas('type', fn(Builder $query) => $query->hasAccess())
+            ->with($with)
+            ->findOrFail($trainingId);
+    }
+
+    /**
+     * @param int $trainingId
      * @param int $fileId
-     * @return \Illuminate\Database\Eloquent\Collection|null
+     * @return Collection|null
      */
     public function getFileById(int $trainingId, int $fileId)
     {
-        $training = $this->findOrFail($trainingId);
-
-        return $training->files()->findOrFail($fileId);
+        return $this->getTrainingByIdWhereHasType($trainingId)
+            ->files()
+            ->findOrFail($fileId);
     }
 
     /**
@@ -87,6 +102,7 @@ class TrainingsRepository extends BaseRepository
     {
         return $this->model
             ->select('id')
+            ->whereHas('type', fn(Builder $query) => $query->hasAccess())
             ->withCount('files')
             ->get();
     }

@@ -28,10 +28,12 @@
                                     <label class="col-form-label">{{ __('Slug') }}:</label>
                                     <p class="form-control-plaintext">{{ $record->slug }}</p>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-form-label">{{ __('View trainings') }}:</label>
-                                    <p class="form-control-plaintext"> {{ __($record->isAdmin() || $record->can_view_trainings ? 'True' : 'False') }}</p>
-                                </div>
+                                @if(!$record->isAdmin())
+                                    <div class="form-group">
+                                        <label class="col-form-label">{{ __('Training types') }}:</label>
+                                        <p class="form-control-plaintext">{{ $record->humanizeTypeNames() }}</p>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <div class="form-actions float-right">

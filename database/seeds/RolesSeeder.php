@@ -14,19 +14,16 @@ class RolesSeeder extends Seeder
     {
         $roles = [
             [
-                'slug'               => 'admin',
-                'name'               => 'Admin',
-                'can_view_trainings' => true,
+                'slug' => 'admin',
+                'name' => 'Admin'
             ],
             [
-                'slug'               => 'pilot',
-                'name'               => 'Pilot',
-                'can_view_trainings' => true,
+                'slug' => 'pilot',
+                'name' => 'Pilot'
             ],
             [
-                'slug'               => 'user',
-                'name'               => 'User',
-                'can_view_trainings' => false,
+                'slug' => 'user',
+                'name' => 'User'
             ]
         ];
 

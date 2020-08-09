@@ -11,6 +11,8 @@ require('tinymce/plugins/link');
 
 require('@fancyapps/fancybox');
 
+require('select2');
+
 window.TrainingFiles = require('./scripts/TrainingFiles')
 
 $(document).ready(function () {
@@ -24,6 +26,10 @@ $(document).ready(function () {
         ],
         toolbar: 'insert | undo redo |  formatselect | bold italic backcolor forecolor  | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
         content_css: []
+    });
+
+    $('select.select2').select2({
+        width: '100%'
     });
 
     $('input[name=name]').on('keyup', function () {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\TrainingsRepository;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use League\Flysystem\FileNotFoundException;
 
@@ -21,6 +22,7 @@ class FilesController extends Controller
      * @param int $fileId
      * @param TrainingsRepository $trainingsRepository
      * @return mixed|void
+     * @throws BindingResolutionException
      */
     public function getFile(int $trainingId, int $fileId, TrainingsRepository $trainingsRepository)
     {
@@ -35,6 +37,4 @@ class FilesController extends Controller
             abort(404);
         }
     }
-
-
 }

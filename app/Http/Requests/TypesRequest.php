@@ -27,7 +27,7 @@ class TypesRequest extends FormRequest
 
         return [
             'slug' => "required|string|unique:types,slug,{$id}",
-            'name'    => 'required|string'
+            'name' => 'required|string'
         ];
     }
 }

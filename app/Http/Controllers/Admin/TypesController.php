@@ -125,6 +125,7 @@ class TypesController extends Controller
         }
 
         try {
+            $type->roleTypes()->delete();
             $type->delete();
 
             return redirect()->route('admin.types.index')

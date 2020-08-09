@@ -3,18 +3,16 @@
         <a href="{{ route('home') }}" class="navbar-brand">
             <img src="{{ asset('img/logo.png') }}" alt="logo" title="{{ config('app.name', 'Technical Challenge') }}">
         </a>
-        @if(canViewTrainings())
-            {!! Form::open(['route' => 'trainings.index', 'method' => 'get', 'class' => 'form-inline mr-3 order-md-1']) !!}
-            <div class="input-group input-group-sm">
-                {!! Form::search('search', request()->input('search'), ['placeholder' => __('Search'), 'class' => 'form-control form-control-navbar']) !!}
-                <div class="input-group-append">
-                    <button class="btn btn-navbar" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
+        {!! Form::open(['route' => 'trainings.index', 'method' => 'get', 'class' => 'form-inline mr-3 order-md-1']) !!}
+        <div class="input-group input-group-sm">
+            {!! Form::search('search', request()->input('search'), ['placeholder' => __('Search'), 'class' => 'form-control form-control-navbar']) !!}
+            <div class="input-group-append">
+                <button class="btn btn-navbar" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
             </div>
-            {!! Form::close() !!}
-        @endif
+        </div>
+        {!! Form::close() !!}
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -25,12 +23,10 @@
                     <a class="nav-link {{ url()->current() === route('home') ? 'active' : '' }}"
                        href="{{ route('home') }}">{{ __('Home') }}</a>
                 </li>
-                @if(canViewTrainings())
-                    <li class="nav-item">
-                        <a class="nav-link {{ url()->current() === route('trainings.index') ? 'active' : '' }}"
-                           href="{{ route('trainings.index') }}">{{ __('Trainings') }}</a>
-                    </li>
-                @endif
+                <li class="nav-item">
+                    <a class="nav-link {{ url()->current() === route('trainings.index') ? 'active' : '' }}"
+                       href="{{ route('trainings.index') }}">{{ __('Trainings') }}</a>
+                </li>
                 @if(isAdmin())
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSettings" data-toggle="dropdown"

@@ -12,18 +12,6 @@ if (!function_exists('isAdmin')) {
     }
 }
 
-if (!function_exists('canViewTrainings')) {
-
-    /**
-     * @return bool
-     */
-    function canViewTrainings(): bool
-    {
-        $userRole = auth()->user()->role;
-        return isset($userRole) && ($userRole->isAdmin() || $userRole->can_view_trainings);
-    }
-}
-
 if (!function_exists('linkToRoute')) {
     /**
      * @param string $name

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RolesRequest;
 use App\Models\Role;
 use App\Repositories\RolesRepository;
+use App\Repositories\TypesRepository;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\ValidationException;
@@ -23,7 +24,7 @@ class RolesController extends Controller
     {
         $pageTitle = __('Roles');
 
-        $records = $rolesRepository->paginate(100);
+        $records = $rolesRepository->paginate(100, ['types']);
 
         return view('admin.roles.index', compact('pageTitle', 'records'));
     }
@@ -31,13 +32,16 @@ class RolesController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param TypesRepository $typesRepository
      * @return View
      */
-    public function create()
+    public function create(TypesRepository $typesRepository)
     {
         $pageTitle = __('Create role');
 
-        return view('admin.roles.create', compact('pageTitle'));
+        $types = $typesRepository->dropdown(false);
+
+        return view('admin.roles.create', compact('pageTitle', 'types'));
     }
 
     /**
@@ -79,12 +83,14 @@ class RolesController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Role $role
+     * @param TypesRepository $typesRepository
      * @return View
      */
-    public function edit(Role $role)
+    public function edit(Role $role, TypesRepository $typesRepository)
     {
         $data = [
             'pageTitle' => $role->name,
+            'types'     => $typesRepository->dropdown(false),
             'record'    => $role
         ];
 
@@ -130,6 +136,7 @@ class RolesController extends Controller
         }
 
         try {
+            $role->roleTypes()->delete();
             $role->delete();
 
             return redirect()->route('admin.roles.index')

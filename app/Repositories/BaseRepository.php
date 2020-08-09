@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\ValidationException;
 
@@ -10,14 +12,6 @@ abstract class BaseRepository
 {
     /** @var Model */
     protected Model $model;
-
-    /**
-     * @return Model
-     */
-    public function getModel(): Model
-    {
-        return $this->model;
-    }
 
     /**
      * @param array $with
@@ -49,7 +43,7 @@ abstract class BaseRepository
     /**
      * @param array $with
      * @param array $sort
-     * @return Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @return Builder[]|Collection
      */
     public function all(array $with = [], array $sort = [])
     {
@@ -60,7 +54,7 @@ abstract class BaseRepository
      * @param $records
      * @param array $with
      * @param array $sort
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return LengthAwarePaginator
      */
     public function paginate($records, array $with = [], array $sort = [])
     {

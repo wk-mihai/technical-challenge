@@ -15,10 +15,10 @@
                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                 @enderror
             </div>
-            <div class="form-group custom-control custom-checkbox">
-                {!! Form::checkbox('can_view_trainings', null, null, ['id' => 'can_view_trainings', 'class' => 'custom-control-input'] ) !!}
-                <label class="custom-control-label" for="can_view_trainings">{{ __('View trainings') }}</label>
-                @error('can_view_trainings')
+            <div class="form-group">
+                <label for="types">{{ __('Training types') }}<span class="required">*</span></label>
+                {!! Form::select('types[]', $types, null, ['id' => 'types', 'class' => 'form-control select2', 'multiple', 'data-placeholder' => __('Select...')]) !!}
+                @error('types')
                 <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
                 @enderror
             </div>

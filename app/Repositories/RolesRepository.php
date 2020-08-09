@@ -30,13 +30,15 @@ class RolesRepository extends BaseRepository
      */
     public function store($data)
     {
-        $data['can_view_trainings'] = array_key_exists('can_view_trainings', $data);
-
         $record = new $this->model($data);
 
         if (!$record->save()) {
             throw new ValidationException($record->getErrors());
         }
+
+        array_map(function ($type) use ($record) {
+            $record->roleTypes()->create(['type_id' => $type]);
+        }, $data['types']);
     }
 
     /**
@@ -46,11 +48,7 @@ class RolesRepository extends BaseRepository
      */
     public function update($record, array $data)
     {
-        $isAdmin = $record->isAdmin();
-
-        $data['can_view_trainings'] = $isAdmin || array_key_exists('can_view_trainings', $data);
-
-        if ($isAdmin && array_key_exists('slug', $data)) {
+        if ($record->isAdmin() && array_key_exists('slug', $data)) {
             unset($data['slug']);
         }
 
@@ -58,6 +56,20 @@ class RolesRepository extends BaseRepository
 
         if (!$record->save()) {
             throw new ValidationException($record->getErrors());
+        }
+
+        if (isset($data['types'])) {
+            $existTypesIds = [];
+
+            foreach ($data['types'] as $type) {
+                $existTypesIds[] = $record->roleTypes()->firstOrCreate([
+                    'type_id' => $type
+                ])->id;
+            }
+
+            $record->roleTypes()
+                ->whereNotIn('id', $existTypesIds)
+                ->delete();
         }
     }
 }
