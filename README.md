@@ -46,6 +46,11 @@ For generating dynamically trainings, use the following command, where _count_ i
 Copy the .env.example file and rename it into .env.testing,
 where you have to add the database credentials, with new database name, ex. _technical_challenge_testing_.
 
+Run the migration command, for creating the testing database:
+
+`php artisan migrate --env=testing`
+
+
 Run the following command:
 
 `$ phpunit`

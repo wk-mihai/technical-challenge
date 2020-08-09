@@ -9,7 +9,7 @@ use Faker\Generator as Faker;
 $factory->define(Training::class, function (Faker $faker) {
     return [
         'type_id' => Type::all()->random()->id,
-        'name'    => $faker->title,
+        'name'    => ucfirst($faker->words(2, true)),
         'content' => $faker->realText(2000),
     ];
 });

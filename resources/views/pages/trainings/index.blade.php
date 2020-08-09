@@ -11,7 +11,7 @@
                     <ul class="nav nav-tabs mb-2">
                         <li class="nav-item">
                             <a class="nav-link {{ url()->current() === route('trainings.index') ? 'active' : '' }}"
-                               href="{{ route('trainings.index', request()->only('search')) }}">{{ __('All') }} ({{ $allTrainingsCount }})</a>
+                               href="{{ route('trainings.index', request()->only('search')) }}">{{ __('All') }}</a>
                         </li>
                         @foreach($types as $type)
                             <li class="nav-item">

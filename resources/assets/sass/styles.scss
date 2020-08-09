@@ -4,8 +4,10 @@ body {
 
         .wrapper {
             .container {
-                background: #e9ecef;
-                border-radius: unset;
+                & > .row {
+                    background: #e9ecef;
+                    border-radius: unset;
+                }
             }
         }
     }
@@ -18,8 +20,11 @@ body {
 
         .container {
             margin: 20px auto;
-            background: #f8f9fa;
-            border-radius: 3px;
+
+            & > .row {
+                background: #f8f9fa;
+                border-radius: 3px;
+            }
         }
     }
 }
