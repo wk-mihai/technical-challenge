@@ -24,7 +24,7 @@ class Type extends Model
         $userRole = auth()->user()->role;
 
         return $query->when(
-            !isset($userRole) || !$userRole->isAdmin(),
+            isset($userRole) && !$userRole->isAdmin(),
             fn(Builder $query) => $query->whereHas(
                 'roles',
                 fn(Builder $query) => $query->where('roles.id', $userRole->id)

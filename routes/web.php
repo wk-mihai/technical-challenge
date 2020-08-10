@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes([
     'register' => false,
-    'verify'   => false
+    'verify'   => false,
+    'confirm'  => false
 ]);
 
 Route::middleware('auth')->group(function () {

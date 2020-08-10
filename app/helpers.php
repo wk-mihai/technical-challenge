@@ -25,7 +25,7 @@ if (!function_exists('linkToRoute')) {
         $attributesStr = '';
 
         foreach ($attributes as $key => $attribute) {
-            $attributesStr .= " {$key}={$attribute}";
+            $attributesStr .= " {$key}='{$attribute}'";
         }
 
         return sprintf("<a href='%s' %s>{$title}</a>", route($name, $parameters), $attributesStr);

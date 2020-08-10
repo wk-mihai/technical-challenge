@@ -4,6 +4,12 @@
     </div>
 @endif
 
+@if (session('status'))
+    <div class="alert alert-info">
+        <span><i class="fa fa-info-circle"></i> {{ session('status') }}</span>
+    </div>
+@endif
+
 @if (session('success'))
     <div class="alert alert-success">
         <span><i class="fa fa-check"></i> {{ session('success') }}</span>

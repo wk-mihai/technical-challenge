@@ -46,27 +46,31 @@ class GenerateTrainings extends Command
 
         $trainings = factory(Training::class, $limit)->create();
 
-        foreach ($trainings as $key => $training) {
-            for ($i = 0; $i < rand(2, 6); $i++) {
-                try {
-                    $uniqueName = md5($training->id) . rand(1, 99999) . time();
-                    $path = "trainings/generated-automatically/images/{$uniqueName}.jpg";
+        $demoImages = Storage::allFiles('public/default-trainings-images');
 
-                    Storage::put($path, file_get_contents($faker->imageUrl()));
+        if (!empty($demoImages)) {
+            foreach ($trainings as $key => $training) {
+                for ($i = 0; $i < rand(2, 6); $i++) {
+                    try {
+                        $uniqueName = md5($training->id) . rand(1, 99999) . time();
+                        $path = "trainings/generated-automatically/images/{$uniqueName}.jpg";
 
-                    TrainingFile::create([
-                        'training_id' => $training->id,
-                        'name'        => $faker->word,
-                        'type'        => 'image',
-                        'url'         => $path
-                    ]);
-                } catch (\Exception $exception) {
-                    $this->error($exception->getMessage());
-                    break;
+                        Storage::put($path, Storage::get($demoImages[rand(0, count($demoImages) - 1)]));
+
+                        TrainingFile::create([
+                            'training_id' => $training->id,
+                            'name'        => $faker->word,
+                            'type'        => 'image',
+                            'url'         => $path
+                        ]);
+                    } catch (\Exception $exception) {
+                        $this->error($exception->getMessage());
+                        break;
+                    }
                 }
-            }
 
-            $this->line(($key + 1) . " from {$limit} trainings were generated");
+                $this->line(($key + 1) . " from {$limit} trainings were generated");
+            }
         }
 
         $this->info("{$limit} trainings were successfully generated.");
