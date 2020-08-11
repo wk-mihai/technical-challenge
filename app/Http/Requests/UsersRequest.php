@@ -33,7 +33,7 @@ class UsersRequest extends FormRequest
             'repeat_password' => 'required|same:password'
         ];
 
-        if (!empty($id)) {
+        if (!empty($id) && is_null($this->password)) {
             $rules['password'] = 'nullable|min:8';
             $rules['repeat_password'] = 'nullable|same:password';
         }

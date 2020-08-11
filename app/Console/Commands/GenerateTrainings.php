@@ -6,6 +6,7 @@ use App\Models\Training;
 use App\Models\TrainingFile;
 use Faker\Generator as Faker;
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Storage;
 
 class GenerateTrainings extends Command
@@ -39,10 +40,16 @@ class GenerateTrainings extends Command
      *
      * @param Faker $faker
      * @return void
+     * @throws FileNotFoundException
      */
     public function handle(Faker $faker)
     {
         $limit = (int) ($this->argument('count') ?? 20);
+
+        if ($limit == 0) {
+            $this->error('No trainings were generated.');
+            return;
+        }
 
         $trainings = factory(Training::class, $limit)->create();
 
@@ -51,22 +58,18 @@ class GenerateTrainings extends Command
         if (!empty($demoImages)) {
             foreach ($trainings as $key => $training) {
                 for ($i = 0; $i < rand(2, 6); $i++) {
-                    try {
-                        $uniqueName = md5($training->id) . rand(1, 99999) . time();
-                        $path = "trainings/generated-automatically/images/{$uniqueName}.jpg";
 
-                        Storage::put($path, Storage::get($demoImages[rand(0, count($demoImages) - 1)]));
+                    $uniqueName = md5($training->id) . rand(1, 99999) . time();
+                    $path = "trainings/generated-automatically/images/{$uniqueName}.jpg";
 
-                        TrainingFile::create([
-                            'training_id' => $training->id,
-                            'name'        => $faker->word,
-                            'type'        => 'image',
-                            'url'         => $path
-                        ]);
-                    } catch (\Exception $exception) {
-                        $this->error($exception->getMessage());
-                        break;
-                    }
+                    Storage::put($path, Storage::get($demoImages[rand(0, count($demoImages) - 1)]));
+
+                    TrainingFile::create([
+                        'training_id' => $training->id,
+                        'name'        => $faker->word,
+                        'type'        => 'image',
+                        'url'         => $path
+                    ]);
                 }
 
                 $this->line(($key + 1) . " from {$limit} trainings were generated");

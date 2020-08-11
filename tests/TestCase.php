@@ -114,13 +114,13 @@ abstract class TestCase extends BaseTestCase
             [
                 'name' => 'image',
                 'type' => 'image',
-                'url'  => UploadedFile::fake()->create('image.jpg')
+                'url'  => UploadedFile::fake()->image('image.jpg')
                     ->storeAs("trainings/images/{$uniqueName}", 'image.jpg')
             ],
             [
                 'name' => 'video',
                 'type' => 'video',
-                'url'  => UploadedFile::fake()->create('video.mp4')
+                'url'  => UploadedFile::fake()->create('video.mp4', 10)
                     ->storeAs("trainings/videos/{$uniqueName}", 'video.mp4')
             ]
         ];

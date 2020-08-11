@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Feature;
 
 use App\Models\Training;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -20,7 +20,7 @@ class SearchTest extends TestCase
 
         factory(Training::class)->create([
             'name'    => $expectedName,
-            'type_id' => $type
+            'type_id' => $type->id
         ]);
 
         $this->actingAs($user)
@@ -39,7 +39,7 @@ class SearchTest extends TestCase
         $expectedName = 'Test Training Name';
 
         factory(Training::class)->create([
-            'type_id' => $type
+            'type_id' => $type->id
         ]);
 
         $this->actingAs($user)

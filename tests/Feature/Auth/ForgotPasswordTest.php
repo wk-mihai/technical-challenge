@@ -1,6 +1,6 @@
 <?php
 
-namespace Auth;
+namespace Tests\Feature\Auth;
 
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\DatabaseTransactions;

@@ -14,6 +14,14 @@ abstract class BaseRepository
     protected Model $model;
 
     /**
+     * @return Model
+     */
+    public function getModel(): Model
+    {
+        return $this->model;
+    }
+
+    /**
      * @param array $with
      * @param array $sort
      * @return Builder
