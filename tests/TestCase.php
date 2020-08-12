@@ -101,6 +101,24 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
+     * @return Role
+     */
+    public function createRoleWithTypes(): Role
+    {
+        $role = factory(Role::class)->create();
+        $types = factory(Type::class, 2)->create();
+
+        $types->each(
+            fn($type) => RoleType::firstOrCreate([
+                'role_id' => $role->id,
+                'type_id' => $type->id
+            ])
+        );
+
+        return $role;
+    }
+
+    /**
      * @param Training $training
      * @return Collection
      */
