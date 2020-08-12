@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exceptions\ValidationFilesException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TrainingsRequest;
 use App\Models\Training;
@@ -9,7 +10,6 @@ use App\Repositories\TrainingsRepository;
 use App\Repositories\TypesRepository;
 use Exception;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class TrainingsController extends Controller
@@ -58,8 +58,8 @@ class TrainingsController extends Controller
 
             return redirect()->route('admin.trainings.index')
                 ->with('success', __('app.the_record_has_been_created'));
-        } catch (ValidationException $e) {
-            return redirect()->back()->withInput()->withErrors($e->getErrors());
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
         }
     }
 
@@ -128,8 +128,8 @@ class TrainingsController extends Controller
 
             return redirect()->route('admin.trainings.index')
                 ->with('success', __('app.the_record_has_been_updated'));
-        } catch (ValidationException $e) {
-            return redirect()->back()->withInput()->withErrors($e->getErrors());
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
         }
     }
 

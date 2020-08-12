@@ -4,6 +4,7 @@ namespace Tests\Feature\Users;
 
 use App\Models\Role;
 use App\Models\User;
+use Faker\Generator as Faker;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
@@ -150,5 +151,42 @@ class ValidationTest extends TestCase
             'repeat_password' => 'wrong-password'
         ])->assertSessionDoesntHaveErrors(['password'])
             ->assertSessionHasErrors(['repeat_password']);
+    }
+
+
+    /** @test */
+    public function is_requires_name_and_password_to_be_string()
+    {
+        $this->store([
+            'name'     => [],
+            'password' => []
+        ])->assertSessionHasErrors(['name', 'password']);
+
+        $this->update(
+            factory(User::class)->create(),
+            [
+                'name'     => [],
+                'password' => []
+            ]
+        )->assertSessionHasErrors(['name', 'password']);
+    }
+
+    /** @test */
+    public function is_requires_name_and_password_to_have_admissible_length()
+    {
+        $name = $password = resolve(Faker::class)->words(100, true);
+
+        $this->store([
+            'name'     => $name,
+            'password' => $password
+        ])->assertSessionHasErrors(['name', 'password']);
+
+        $this->update(
+            factory(User::class)->create(),
+            [
+                'name'     => $name,
+                'password' => $password
+            ]
+        )->assertSessionHasErrors(['name', 'password']);
     }
 }

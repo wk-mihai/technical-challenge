@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\User as Model;
-use Illuminate\Validation\ValidationException;
 
 class UsersRepository extends BaseRepository
 {
@@ -14,7 +13,6 @@ class UsersRepository extends BaseRepository
 
     /**
      * @param $data
-     * @throws ValidationException
      */
     public function store($data)
     {
@@ -22,15 +20,12 @@ class UsersRepository extends BaseRepository
 
         $record = new $this->model($data);
 
-        if (!$record->save()) {
-            throw new ValidationException($record->getErrors());
-        }
+        $record->save();
     }
 
     /**
      * @param $record
      * @param array $data
-     * @throws ValidationException
      */
     public function update($record, array $data)
     {
@@ -43,9 +38,6 @@ class UsersRepository extends BaseRepository
         }
 
         $record->fill($data);
-
-        if (!$record->save()) {
-            throw new ValidationException($record->getErrors());
-        }
+        $record->save();
     }
 }

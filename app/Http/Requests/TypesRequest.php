@@ -26,8 +26,8 @@ class TypesRequest extends FormRequest
         $id = isset($this->type) ? $this->type->id : '';
 
         return [
-            'slug' => "required|string|unique:types,slug,{$id}",
-            'name' => 'required|string'
+            'slug' => "required|string|max:255|unique:types,slug,{$id}",
+            'name' => 'required|string|max:255'
         ];
     }
 }

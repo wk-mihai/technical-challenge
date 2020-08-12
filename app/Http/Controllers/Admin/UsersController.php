@@ -9,7 +9,6 @@ use App\Repositories\RolesRepository;
 use App\Repositories\UsersRepository;
 use Exception;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class UsersController extends Controller
@@ -53,14 +52,10 @@ class UsersController extends Controller
      */
     public function store(UsersRequest $request, UsersRepository $usersRepository)
     {
-        try {
-            $usersRepository->store($request->all());
+        $usersRepository->store($request->all());
 
-            return redirect()->route('admin.users.index')
-                ->with('success', __('app.the_record_has_been_created'));
-        } catch (ValidationException $e) {
-            return redirect()->back()->withInput()->withErrors($e->getErrors());
-        }
+        return redirect()->route('admin.users.index')
+            ->with('success', __('app.the_record_has_been_created'));
     }
 
     /**
@@ -108,14 +103,10 @@ class UsersController extends Controller
      */
     public function update(UsersRequest $request, User $user, UsersRepository $usersRepository)
     {
-        try {
-            $usersRepository->update($user, $request->all());
+        $usersRepository->update($user, $request->all());
 
-            return redirect()->route('admin.users.index')
-                ->with('success', __('app.the_record_has_been_updated'));
-        } catch (ValidationException $e) {
-            return redirect()->back()->withInput()->withErrors($e->getErrors());
-        }
+        return redirect()->route('admin.users.index')
+            ->with('success', __('app.the_record_has_been_updated'));
     }
 
     /**

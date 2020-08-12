@@ -26,15 +26,15 @@ class UsersRequest extends FormRequest
         $id = isset($this->user) ? $this->user->id : '';
 
         $rules = [
-            'role_id'         => 'required|exists:roles,id',
-            'name'            => 'required|string',
+            'role_id'         => 'required|integer|exists:roles,id',
+            'name'            => 'required|string|max:255',
             'email'           => "required|email|unique:users,email,{$id}",
-            'password'        => 'required|min:8',
+            'password'        => 'required|string|min:8|max:255',
             'repeat_password' => 'required|same:password'
         ];
 
         if (!empty($id) && is_null($this->password)) {
-            $rules['password'] = 'nullable|min:8';
+            $rules['password'] = 'nullable|string|min:8|max:255';
             $rules['repeat_password'] = 'nullable|same:password';
         }
 

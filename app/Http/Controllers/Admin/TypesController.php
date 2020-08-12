@@ -8,7 +8,6 @@ use App\Models\Type;
 use App\Repositories\TypesRepository;
 use Exception;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class TypesController extends Controller
@@ -49,14 +48,10 @@ class TypesController extends Controller
      */
     public function store(TypesRequest $request, TypesRepository $typesRepository)
     {
-        try {
-            $typesRepository->store($request->all());
+        $typesRepository->store($request->all());
 
-            return redirect()->route('admin.types.index')
-                ->with('success', __('app.the_record_has_been_created'));
-        } catch (ValidationException $e) {
-            return redirect()->back()->withInput()->withErrors($e->getErrors());
-        }
+        return redirect()->route('admin.types.index')
+            ->with('success', __('app.the_record_has_been_created'));
     }
 
     /**
@@ -101,14 +96,10 @@ class TypesController extends Controller
      */
     public function update(TypesRequest $request, Type $type, TypesRepository $typesRepository)
     {
-        try {
-            $typesRepository->update($type, $request->all());
+        $typesRepository->update($type, $request->all());
 
-            return redirect()->route('admin.types.index')
-                ->with('success', __('app.the_record_has_been_updated'));
-        } catch (ValidationException $e) {
-            return redirect()->back()->withInput()->withErrors($e->getErrors());
-        }
+        return redirect()->route('admin.types.index')
+            ->with('success', __('app.the_record_has_been_updated'));
     }
 
     /**

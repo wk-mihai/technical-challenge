@@ -6,7 +6,6 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Validation\ValidationException;
 
 abstract class BaseRepository
 {
@@ -41,15 +40,6 @@ abstract class BaseRepository
 
     /**
      * @param array $with
-     * @return Builder|Model|object|null
-     */
-    public function first(array $with = [])
-    {
-        return $this->make($with)->first();
-    }
-
-    /**
-     * @param array $with
      * @param array $sort
      * @return Builder[]|Collection
      */
@@ -73,15 +63,6 @@ abstract class BaseRepository
      * @param $id
      * @return mixed
      */
-    public function find($id)
-    {
-        return $this->model->find($id);
-    }
-
-    /**
-     * @param $id
-     * @return mixed
-     */
     public function findOrFail($id)
     {
         return $this->model->findOrFail($id);
@@ -89,28 +70,21 @@ abstract class BaseRepository
 
     /**
      * @param $data
-     * @throws ValidationException
      */
     public function store($data)
     {
         $record = new $this->model($data);
 
-        if (!$record->save()) {
-            throw new ValidationException($record->getErrors());
-        }
+        $record->save();
     }
 
     /**
      * @param $record
      * @param array $data
-     * @throws ValidationException
      */
     public function update($record, array $data)
     {
         $record->fill($data);
-
-        if (!$record->save()) {
-            throw new ValidationException($record->getErrors());
-        }
+        $record->save();
     }
 }

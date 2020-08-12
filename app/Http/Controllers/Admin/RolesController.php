@@ -9,7 +9,6 @@ use App\Repositories\RolesRepository;
 use App\Repositories\TypesRepository;
 use Exception;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class RolesController extends Controller
@@ -53,14 +52,10 @@ class RolesController extends Controller
      */
     public function store(RolesRequest $request, RolesRepository $rolesRepository)
     {
-        try {
-            $rolesRepository->store($request->all());
+        $rolesRepository->store($request->all());
 
-            return redirect()->route('admin.roles.index')
-                ->with('success', __('app.the_record_has_been_created'));
-        } catch (ValidationException $e) {
-            return redirect()->back()->withInput()->withErrors($e->getErrors());
-        }
+        return redirect()->route('admin.roles.index')
+            ->with('success', __('app.the_record_has_been_created'));
     }
 
     /**
@@ -107,14 +102,10 @@ class RolesController extends Controller
      */
     public function update(RolesRequest $request, Role $role, RolesRepository $rolesRepository)
     {
-        try {
-            $rolesRepository->update($role, $request->all());
+        $rolesRepository->update($role, $request->all());
 
-            return redirect()->route('admin.roles.index')
-                ->with('success', __('app.the_record_has_been_updated'));
-        } catch (ValidationException $e) {
-            return redirect()->back()->withInput()->withErrors($e->getErrors());
-        }
+        return redirect()->route('admin.roles.index')
+            ->with('success', __('app.the_record_has_been_updated'));
     }
 
     /**

@@ -3,7 +3,9 @@
 namespace Tests\Feature\Types;
 
 use App\Models\Type;
+use Faker\Generator as Faker;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
@@ -91,5 +93,42 @@ class ValidationTest extends TestCase
         $this->update($type, ['slug' => $slug, 'name' => $this->typeName])
             ->assertSessionDoesntHaveErrors(['name'])
             ->assertSessionHasErrors(['slug']);
+    }
+
+    /** @test */
+    public function is_requires_name_and_slug_to_be_string()
+    {
+        $this->store([
+            'name' => [],
+            'slug' => []
+        ])->assertSessionHasErrors(['name', 'slug']);
+
+        $this->update(
+            factory(Type::class)->create(),
+            [
+                'name' => [],
+                'slug' => []
+            ]
+        )->assertSessionHasErrors(['name', 'slug']);
+    }
+
+    /** @test */
+    public function is_requires_name_and_slug_to_have_admissible_length()
+    {
+        $name = resolve(Faker::class)->words(100, true);
+        $slug = Str::slug($name);
+
+        $this->store([
+            'name' => $name,
+            'slug' => $slug
+        ])->assertSessionHasErrors(['name', 'slug']);
+
+        $this->update(
+            factory(Type::class)->create(),
+            [
+                'name' => $name,
+                'slug' => $slug
+            ]
+        )->assertSessionHasErrors(['name', 'slug']);
     }
 }

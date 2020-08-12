@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Exceptions\ValidationFilesException;
 use App\Models\Training as Model;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -9,7 +10,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Validation\ValidationException;
 
 class TrainingsRepository extends BaseRepository
 {
@@ -109,15 +109,13 @@ class TrainingsRepository extends BaseRepository
 
     /**
      * @param $data
-     * @throws ValidationException
+     * @throws ValidationFilesException
      */
     public function store($data)
     {
         $record = new $this->model($data);
 
-        if (!$record->save()) {
-            throw new ValidationException($record->getErrors());
-        }
+        $record->save();
 
         $this->saveFiles($data, $record);
     }
@@ -125,15 +123,12 @@ class TrainingsRepository extends BaseRepository
     /**
      * @param Model $record
      * @param array $data
-     * @throws ValidationException
+     * @throws ValidationFilesException
      */
     public function update($record, array $data)
     {
         $record->fill($data);
-
-        if (!$record->save()) {
-            throw new ValidationException($record->getErrors());
-        }
+        $record->save();
 
         $this->saveFiles($data, $record);
     }
@@ -141,9 +136,18 @@ class TrainingsRepository extends BaseRepository
     /**
      * @param $data
      * @param $record
+     * @throws ValidationFilesException
      */
     protected function saveFiles($data, $record)
     {
+        if (array_key_exists('images', $data) && !is_array($data['images'])) {
+            throw new ValidationFilesException(__('validation.array', ['attribute' => 'images']));
+        }
+
+        if (array_key_exists('videos', $data) && !is_array($data['videos'])) {
+            throw new ValidationFilesException(__('validation.array', ['attribute' => 'videos']));
+        }
+
         $files = array_merge(
             $this->storeFilesOnDisk($record->id, $data['images'] ?? [], 'images'),
             $this->storeFilesOnDisk($record->id, $data['videos'] ?? [], 'videos')

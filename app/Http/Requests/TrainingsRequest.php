@@ -24,8 +24,9 @@ class TrainingsRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'     => 'required|string',
-            'type_id'  => 'required|exists:types,id',
+            'name'     => 'required|string|max:255',
+            'content'  => 'nullable|string',
+            'type_id'  => 'required|integer|exists:types,id',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB
             'videos.*' => 'nullable|mimes:mp4,mov,ogg|max:65536' // 64MB
         ];

@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\Role as Model;
-use Illuminate\Validation\ValidationException;
 
 class RolesRepository extends BaseRepository
 {
@@ -26,15 +25,11 @@ class RolesRepository extends BaseRepository
 
     /**
      * @param $data
-     * @throws ValidationException
      */
     public function store($data)
     {
         $record = new $this->model($data);
-
-        if (!$record->save()) {
-            throw new ValidationException($record->getErrors());
-        }
+        $record->save();
 
         array_map(function ($type) use ($record) {
             $record->roleTypes()->create(['type_id' => $type]);
@@ -44,7 +39,6 @@ class RolesRepository extends BaseRepository
     /**
      * @param $record
      * @param array $data
-     * @throws ValidationException
      */
     public function update($record, array $data)
     {
@@ -53,10 +47,7 @@ class RolesRepository extends BaseRepository
         }
 
         $record->fill($data);
-
-        if (!$record->save()) {
-            throw new ValidationException($record->getErrors());
-        }
+        $record->save();
 
         if (isset($data['types'])) {
             $existTypesIds = [];

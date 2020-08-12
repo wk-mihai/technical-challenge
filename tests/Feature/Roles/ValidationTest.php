@@ -3,7 +3,9 @@
 namespace Tests\Feature\Roles;
 
 use App\Models\Role;
+use Faker\Generator as Faker;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
@@ -78,6 +80,42 @@ class ValidationTest extends TestCase
     }
 
     /** @test */
+    public function is_requires_string_name()
+    {
+        $this->store(['name' => [$this->roleName]])
+            ->assertSessionHasErrors(['name']);
+
+        $role = factory(Role::class)->create();
+
+        $this->update($role, ['name' => [$this->roleName]])
+            ->assertSessionHasErrors(['name']);
+    }
+
+    /** @test */
+    public function is_requires_string_slug()
+    {
+        $this->store(['slug' => [$this->roleName]])
+            ->assertSessionHasErrors(['slug']);
+
+        $role = factory(Role::class)->create();
+
+        $this->update($role, ['slug' => [$this->roleName]])
+            ->assertSessionHasErrors(['slug']);
+    }
+
+    /** @test */
+    public function is_requires_array_types()
+    {
+        $this->store(['types' => 'string'])
+            ->assertSessionHasErrors(['types']);
+
+        $role = factory(Role::class)->create();
+
+        $this->update($role, ['types' => 'string'])
+            ->assertSessionHasErrors(['types']);
+    }
+
+    /** @test */
     public function is_requires_unique_slug_on_store()
     {
         $slug = 'test-role';
@@ -126,5 +164,25 @@ class ValidationTest extends TestCase
 
         $this->update($role)
             ->assertSessionDoesntHaveErrors(['types']);
+    }
+
+    /** @test */
+    public function is_requires_name_and_slug_to_have_admissible_length()
+    {
+        $name = resolve(Faker::class)->words(100, true);
+        $slug = Str::slug($name);
+
+        $this->store([
+            'name' => $name,
+            'slug' => $slug
+        ])->assertSessionHasErrors(['name', 'slug']);
+
+        $this->update(
+            factory(Role::class)->create(),
+            [
+                'name' => $name,
+                'slug' => $slug
+            ]
+        )->assertSessionHasErrors(['name', 'slug']);
     }
 }

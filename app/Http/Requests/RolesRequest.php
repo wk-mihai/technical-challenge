@@ -26,8 +26,8 @@ class RolesRequest extends FormRequest
         $id = isset($this->role) ? $this->role->id : '';
 
         $rules = [
-            'name'  => 'required|string',
-            'slug'  => "required|string|unique:roles,slug,{$id}",
+            'name'  => 'required|string|max:255',
+            'slug'  => "required|string|max:255|unique:roles,slug,{$id}",
             'types' => 'required|array|exists:types,id'
         ];
 

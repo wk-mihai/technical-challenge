@@ -10,6 +10,8 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+use ReflectionClass;
+use ReflectionException;
 use Storage;
 
 abstract class TestCase extends BaseTestCase
@@ -101,12 +103,13 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
+     * @param int $typesNumber
      * @return Role
      */
-    public function createRoleWithTypes(): Role
+    public function createRoleWithTypes(int $typesNumber = 2): Role
     {
         $role = factory(Role::class)->create();
-        $types = factory(Type::class, 2)->create();
+        $types = factory(Type::class, $typesNumber)->create();
 
         $types->each(
             fn($type) => RoleType::firstOrCreate([
@@ -177,10 +180,18 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * @return string
+     * @param $object
+     * @param $methodName
+     * @param array $parameters
+     * @return mixed
+     * @throws ReflectionException
      */
-    public function getStubDirectory(): string
+    public function invokeMethod(&$object, $methodName, array $parameters = [])
     {
-        return __DIR__ . '/stubs';
+        $reflection = new ReflectionClass(get_class($object));
+        $method = $reflection->getMethod($methodName);
+        $method->setAccessible(true);
+
+        return $method->invokeArgs($object, $parameters);
     }
 }
