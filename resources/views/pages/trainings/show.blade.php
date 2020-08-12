@@ -7,6 +7,14 @@
                 <h1>{{ $pageTitle }}</h1>
             </div>
             <div class="page-content">
+                <div class="info-wrap mb-2 border-bottom d-inline-block py-2">
+                    <div class="info">
+                        Type: <span class="font-weight-bold">{{ $training->type->name }}</span>
+                    </div>
+                    <div class="info">
+                        Files: <span class="font-weight-bold">{{ $training->files->count() }}</span>
+                    </div>
+                </div>
                 @if(!empty($training->content))
                     <div class="content">{!! $training->content !!}</div>
                 @endif
