@@ -31,8 +31,6 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
 
         if (!static::$initialised) {
-            $this->artisan('migrate', ['--env' => 'testing']);
-
             $this->seedRequiredData();
 
             static::$initialised = true;
