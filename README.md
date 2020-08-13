@@ -43,7 +43,7 @@ For authenticate in the application, use the following credentials:
 For generating dynamically trainings, use the following command, where _count_ is the number of trainings 
 (by default it will be generated 20 trainings, without videos):
 
-`php artisan generate:trainings count`
+`php artisan generate:trainings {count?}`
 
 ## Testing
 Copy the .env.example file and rename it into .env.testing,
