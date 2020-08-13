@@ -46,14 +46,14 @@
                     </li>
                 @endif
                 <li class="nav-item d-block d-md-none">
-                    <a class="nav-link" href="{{ route('logout') }}">
+                    <a class="nav-link" href="{{ route('logout') }}" title="{{ auth()->user()->name }}">
                         <i class="fas fa-sign-out-alt"></i>
                         {{ __('Logout') }}
                     </a>
                 </li>
             </ul>
         </div>
-        <a class="logout d-none d-md-block order-md-2" href="{{ route('logout') }}">
+        <a class="logout d-none d-md-block order-md-2" href="{{ route('logout') }}" title="{{ auth()->user()->name }}">
             <i class="fas fa-sign-out-alt"></i>
         </a>
     </div>
