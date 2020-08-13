@@ -51,7 +51,7 @@ where you have to add the database credentials, with new database name, ex. _tec
 
 Run the migration command, for creating the testing database:
 
-`php artisan migrate --env=testing`
+`php artisan migrate --env=testing --seed`
 
 
 Run the following command:
