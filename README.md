@@ -10,15 +10,15 @@
 - post_max_size 256M
 
 ## Installation
+Copy the .env.example file and rename it into .env,
+where you have to add the database credentials, and the mail credentials
+(I'm using mailhog for send emails - they are used just for the password reset).
+
 Install this application with composer using the following command:
 
 `composer install`
 
-After installation, you have to copy the .env.example file and rename it into .env,
-where you have to add the database credentials, and the mail credentials
-(I'm using mailhog for send emails - they are used just for the password reset).
-
-Now, run the following command for creating the tables and populating them with predefined data:
+After installation, run the following command for creating the tables and populating them with predefined data:
 
 `php artisan migrate --seed`
 
